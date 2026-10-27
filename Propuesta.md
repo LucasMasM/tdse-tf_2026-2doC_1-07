@@ -94,7 +94,8 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 *   Software Debouncing: Máquina de estados no bloqueante basada en el SysTick de 1 ms para la eliminación de rebotes mecánicos en el botón.
 
 ### 2.3 Diagrama en bloques
-*(Espacio reservado para el diagrama en bloques)*
+
+<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/85f73cdf-2a12-4ad9-93c9-66bc9eccaf69" />
 
 ## 3. Elicitación de Requisitos y Casos de Uso
 
