@@ -23,7 +23,7 @@ Como objetivos adicionales, el sistema incluirá:
 *   **Mecanismo de alerta sonora proporcional:** Controlado mediante un buzzer que se activará al detectar un objeto a partir de un umbral de distancia configurable, incrementando progresivamente la frecuencia del sonido mediante PWM conforme el objeto se aproxime al sensor.
 *   **Dos modos de funcionamiento seleccionables:**
     *   **Modo Manual:** Permite al usuario controlar la orientación del servomotor y direccionar el sensor en tiempo real mediante un joystick analógico (lectura por ADC del STM32).
-    *   **Modo Automático:** Ejecuta un paneo constante y automatizado de $180^{\circ}$ a un paso determinado mediante generación de señales PWM para la exploración continua del área.
+    *   **Modo Automático:** Ejecuta un paneo constante y automatizado de 180° a un paso determinado mediante generación de señales PWM para la exploración continua del área.
 *   **Pantalla LCD/Display con interfaz visual organizada en tres renglones:**
     1.  Primer renglón: Modo de funcionamiento seleccionado (Manual o Automático).
     2.  Segundo renglón: Confirmación de detección de objeto (Detección: SI / NO).
@@ -35,7 +35,7 @@ Como objetivos adicionales, el sistema incluirá:
 Se consideran tres alternativas de implementación para ponderar el alcance del hardware y la viabilidad técnica:
 
 1.  **Proyecto Base (STM32F103RB + Sensor Ultrasonido + Servomotor + Menu LCD + Joystick + Buzzer + Botón + Flash Interna)**: Sistema de barrido angular con dos modos (Manual/Automático), alertas sonoras e interfaz gráfica.
-2.  **Base + Módulo Bluetooth (HM-10):** Agrega conectividad inalámbrica por UART para transmitir datos de barrido y recibir comandos desde una aplicación.
+2.  **Base + Módulo Bluetooth (HM-10):** Usando conectividad inalámbrica por UART se reemplaza el menu LCD y el boton fisico por una aplicación bluetooth que cumple las mismas funciones que estos.
 3.  **Base + Matriz de LEDs 8x8 / Pantalla OLED gráfica (SPI/I2C):** Reemplaza o complementa la pantalla por una visualización del radar en tiempo real por hardware.
 
 Para evaluar las alternativas, en la tabla 1.2.1, se ponderan los siguientes criterios (escala 1 a 10):
@@ -55,7 +55,7 @@ Para evaluar las alternativas, en la tabla 1.2.1, se ponderan los siguientes cri
 | **Puntaje Total** | **372** | **377** | **300** |
 
 ### 1.3 Selección de proyecto
-En función de la ponderación realizada, se selecciona la opción **Base + Módulo Bluetooth (HM-10)**. Esta alternativa cumple íntegramente con los requisitos de hardware obligatorio del curso sobre el microcontrolador STM32F103RB (Bluetooth HM-10 por USART, sensores analógicos por ADC, buzzer, almacenamiento en Flash interna, botones e interrupciones GPIO/EXTI) y aporta un diferencial técnico sin comprometer la viabilidad dentro del calendario.
+En función de la ponderación realizada, se selecciona la opción **Base + Módulo Bluetooth (HM-10)**. Esta alternativa cumple íntegramente con los requisitos de hardware obligatorio del curso sobre el microcontrolador STM32F103RB (Bluetooth HM-10 por USART, sensores analógicos por ADC, buzzer, almacenamiento en Flash interna e interrupciones GPIO/EXTI) y aporta un diferencial técnico sin comprometer la viabilidad dentro del calendario.
 
 ## 2. Especificación de Hardware y Programación
 
@@ -65,7 +65,6 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 *   Placa de desarrollo NUCLEO-F103RB / Microcontrolador STM32F103RB.
 *   Módulo Bluetooth HM-10 (comunicación serie USART).
 *   Sensor analógico: Joystick analógico (conectado a canales ADC del STM32).
-*   1 Botón/Pulsador físico (conectado a entrada digital GPIO).
 *   Buzzer (excitado mediante canal PWM de un Timer del STM32).
 *   LEDs indicadores (para indicación de estados).
 *   Flash interna del STM32F103RB (umbrales de distancia, paso de barrido, etc.).
@@ -73,7 +72,6 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 **Hardware Adicional (específico del proyecto):**
 *   Sensor de distancia por ultrasonido (Gestionado mediante Timers).
 *   Servomotor (control de barrido angular 0°-180° mediante señal PWM a 50 Hz).
-*   Display/Pantalla LCD (Visualización organizada en 3 renglones).
 
 ### 2.2 Programación Obligatoria & Adicional
 
@@ -85,7 +83,7 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
     *   SysTick/Tick de Tiempo: Tick = 1ms usando el periférico del STM32 Callbacks.
     *   Tareas No Bloqueantes: Código sin retardos bloqueantes.
     *   Modelos de Estado: Diagramas de Estado Finito (FSM).
-    *   Menú Interactivo: Navegación mediante botón, joystick y pantalla.
+    *   Menú Interactivo: En la aplicación bluetooth.
     *   Modos de operación: Mínimo dos modos (automático y manual).
     *   Bajo Consumo: Modos de reposo/Power saving del STM32 en períodos de inactividad.
     *   Uso de periféricos por I2C/SPI/USART: Para comunicación con periféricos.
@@ -93,11 +91,11 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 
 **Programación Adicional:**
 *   Algoritmo de filtrado digital (promedio móvil o media acotada) para eliminar lecturas espurias de distancia del ultrasonido y mediciones analógicas del joystick (ADC).
-*   Software Debouncing: Máquina de estados no bloqueante basada en el SysTick de 1 ms para la eliminación de rebotes mecánicos en el botón.
 
 ### 2.3 Diagrama en bloques
 
-<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/85f73cdf-2a12-4ad9-93c9-66bc9eccaf69" />
+<img width="652" height="393" alt="image" src="https://github.com/user-attachments/assets/3f8501e2-13a5-407d-a2ba-0abaef1fd077" />
+
 
 ## 3. Elicitación de Requisitos y Casos de Uso
 
@@ -112,10 +110,10 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 | **Alertas Sonoras y Visuales** | 2.1 | El sistema activará el buzzer cuando se detecte un objeto por debajo del umbral de distancia configurado. |
 | | 2.2 | La frecuencia o cadencia del sonido del buzzer aumentará proporcionalmente (frecuencia PWM ajustable) a medida que el objeto esté más cerca. |
 | | 2.3 | Se dispondrá de LEDs indicativos para señalar el estado del sistema (NORMAL, FALLA). |
-| **Interfaz y Navegación** | 3.1 | La pantalla mostrará en Renglón 1 el Modo de funcionamiento (Manual / Automático). |
-| | 3.2 | La pantalla mostrará en Renglón 2 el estado de detección (Objeto: SÍ / NO). |
-| | 3.3 | La pantalla mostrará en Renglón 3 la distancia actual calculada en cm. |
-| | 3.4 | El menú se navegará mediante un joystick y un botón físico con filtrado de rebotes (debouncing por FSM no bloqueante).<br>
+| **Interfaz y Navegación** | 3.1 | La aplicación mostrará en Renglón 1 el Modo de funcionamiento (Manual / Automático). |
+| | 3.2 | La aplicación mostrará en Renglón 2 el estado de detección (Objeto: SÍ / NO). |
+| | 3.3 | La aplicación mostrará en Renglón 3 la distancia actual calculada en cm. |
+| | 3.4 | El menú se navegará mediante la aplicación con botones virtuales (control bluetooth). |
 | **Almacenamiento y Ajustes** | 4.1 | Los parámetros del sistema (umbrales de alerta, velocidad de barrido) se almacenarán en páginas dedicadas de la Flash interna del STM32F103RB. |
 |  | 4.2 | Al reiniciar, el sistema cargará los datos guardados en Flash y verificará su validez. |
 | **Conectividad y Estados** | 5.1 | El sistema transmitirá el estado del barrido y mediciones vía Bluetooth HM-10 utilizando el periférico USART del STM32. |
@@ -130,7 +128,7 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 | :--- | :--- |
 | **Disparador** | El sistema detecta un objeto dentro del rango del umbral mientras ejecuta el barrido de 180° |
 | **Precondiciones** | STM32F103RB encendido en modo NORMAL, submodo AUTOMÁTICO. Sensor y servomotor operativos. Umbrales cargados desde la Flash interna. |
-| **Flujo Principal** | 1. El Timer del STM32 incrementa el ancho de pulso PWM del servomotor para cambiar su ángulo.<br>2. El sensor realiza la lectura de distancia (medida por Timer Input Capture) y aplica filtrado digital.<br>3. El firmware valida que la distancia es menor al umbral configurado.<br>4. Se actualiza el Renglón 2 del LCD ("Detección: Si") y el Renglón 3 con la distancia en cm.<br>5. Se calcula la proximidad y se ajusta la frecuencia/cadencia del PWM del buzzer.<br>6. Se transmiten los datos vía USART al módulo HM-10 (Bluetooth). |
+| **Flujo Principal** | 1. El Timer del STM32 incrementa el ancho de pulso PWM del servomotor para cambiar su ángulo.<br>2. El sensor realiza la lectura de distancia (medida por Timer Input Capture) y aplica filtrado digital.<br>3. El firmware valida que la distancia es menor al umbral configurado.<br>4. Se actualiza el Renglón 2 de la aplicación ("Detección: Si") y el Renglón 3 con la distancia en cm.<br>5. Se calcula la proximidad y se ajusta la frecuencia/cadencia del PWM del buzzer.<br>6. Se transmiten los datos vía USART al módulo HM-10 (Bluetooth). |
 | **Flujos Alternativos** | a. Objeto fuera de rango: Se muestra "Detección: NO", se apaga el buzzer y continúa el paneo.<br>b. Fallo en el sensor: Si el Timer no recibe la señal de eco tras el timeout, el sistema pasa a estado FALLA y enciende el LED correspondiente. |
 
 **Caso de Uso 2: Control Orientativo Manual mediante Joystick**
