@@ -1,4 +1,6 @@
-# Sistema de Detección y Monitoreo de Objetos por Ultrasonido
+<img width="762" height="292" alt="image" src="https://github.com/user-attachments/assets/fa319b31-df72-4906-ab5b-7b1bd385841a" />
+
+# Sistema de detección y monitoreo de objetos por ultrasonido
 
  
 
@@ -36,7 +38,7 @@ Se consideran tres alternativas de implementación para ponderar el alcance del 
 2.  **Base + Módulo Bluetooth (HM-10):** Agrega conectividad inalámbrica por UART para transmitir datos de barrido y recibir comandos desde una aplicación.
 3.  **Base + Matriz de LEDs 8x8 / Pantalla OLED gráfica (SPI/I2C):** Reemplaza o complementa la pantalla por una visualización del radar en tiempo real por hardware.
 
-Para evaluar las alternativas, se ponderan los siguientes criterios (escala 1 a 10):
+Para evaluar las alternativas, en la tabla 1.2.1, se ponderan los siguientes criterios (escala 1 a 10):
 *   **Disponibilidad de Hardware (peso 9):** Facilidad de adquisición en el mercado local sin depender de importaciones.
 *   **Impacto en el Proyecto (peso 8):** Aporte a la funcionalidad y valor agregado del prototipo.
 *   **Costo (peso 8):** Inversión económica global requerida.
