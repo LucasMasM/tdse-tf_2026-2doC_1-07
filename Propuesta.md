@@ -102,7 +102,8 @@ A continuación, se listan las pautas de diseño, patrones arquitectónicos y re
 
 En la Figura 1 se presenta la arquitectura general e interconexión del sistema de monitoreo. En ella se visualiza al microcontrolador STM32F103RB como elemento central de procesamiento, interactuando con los periféricos de entrada (joystick analógico por ADC y sensor de ultrasonido por Timers), periféricos de salida (servomotor y buzzer piezoeléctrico controlados por PWM, e indicadores LED de estado) y los módulos de soporte (memoria Flash interna para almacenamiento persistente y módulo Bluetooth HM-10 vía USART para la interfaz con la aplicación móvil).
 
-<img width="652" height="393" alt="image" src="https://github.com/user-attachments/assets/3f8501e2-13a5-407d-a2ba-0abaef1fd077" />
+<p align="center"><img width="970" height="582" alt="image" src="https://github.com/user-attachments/assets/0fda5c21-61a4-47c8-a889-b2d8dfad53dd" />
+
 
 <p align="center"><em>Figura 1. Diagrama en bloques funcional del sistema.</em></p>
 
