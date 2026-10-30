@@ -38,7 +38,7 @@ Se consideran tres alternativas de implementación para ponderar el alcance del 
 2.  **Base + Módulo Bluetooth (HM-10):** Usando conectividad inalámbrica por UART se reemplaza el menu LCD y el boton fisico por una aplicación bluetooth que cumple las mismas funciones que estos.
 3.  **Base + Matriz de LEDs 8x8 / Pantalla OLED gráfica (SPI/I2C):** Reemplaza o complementa la pantalla por una visualización del radar en tiempo real por hardware.
 
-Para evaluar las alternativas, en la tabla 1.2.1, se ponderan los siguientes criterios (escala 1 a 10):
+Para evaluar las alternativas, en la tabla 1, se ponderan los siguientes criterios (escala 1 a 10):
 *   **Disponibilidad de Hardware (peso 9):** Facilidad de adquisición en el mercado local sin depender de importaciones.
 *   **Impacto en el Proyecto (peso 8):** Aporte a la funcionalidad y valor agregado del prototipo.
 *   **Costo (peso 8):** Inversión económica global requerida.
@@ -54,12 +54,16 @@ Para evaluar las alternativas, en la tabla 1.2.1, se ponderan los siguientes cri
 | Interés Personal (peso: 7) | 8 (56) | 9 (63) | 8 (56) |
 | **Puntaje Total** | **372** | **377** | **300** |
 
+<p align="center"><em>Tabla 1. Matriz de evaluación y ponderación de alternativas del proyecto.</em></p>
+
 ### 1.3 Selección de proyecto
 En función de la ponderación realizada, se selecciona la opción **Base + Módulo Bluetooth (HM-10)**. Esta alternativa cumple íntegramente con los requisitos de hardware obligatorio del curso sobre el microcontrolador STM32F103RB (Bluetooth HM-10 por USART, sensores analógicos por ADC, buzzer, almacenamiento en Flash interna e interrupciones GPIO/EXTI) y aporta un diferencial técnico sin comprometer la viabilidad dentro del calendario.
 
 ## 2. Especificación de Hardware y Programación
 
 ### 2.1 Hardware Obligatorio y Adicional
+
+En esta sección se presentan la composición de hardware del sistema y las especificaciones de programación definidas para el firmware. Se detallan tanto los requisitos obligatorios establecidos por la asignatura para la plataforma STM32F103RB como los componentes y patrones adicionales integrados para dar cumplimiento al prototipo seleccionado.
 
 **Hardware Obligatorio:**
 *   Placa de desarrollo NUCLEO-F103RB / Microcontrolador STM32F103RB.
@@ -74,6 +78,8 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 *   Servomotor (control de barrido angular 0°-180° mediante señal PWM a 50 Hz).
 
 ### 2.2 Programación Obligatoria & Adicional
+
+A continuación, se listan las pautas de diseño, patrones arquitectónicos y restricciones de software aplicadas en el desarrollo del código del microcontrolador STM32F103RB, estructuradas entre las exigencias obligatorias del curso y los algoritmos específicos de procesamiento incorporados.
 
 **Programación Obligatoria:**
 *   **Arquitectura Bare Metal:** Sin Sistema Operativo, del tipo Event-Triggered System.
@@ -94,12 +100,17 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 
 ### 2.3 Diagrama en bloques
 
+En la Figura 1 se presenta la arquitectura general e interconexión del sistema de monitoreo. En ella se visualiza al microcontrolador STM32F103RB como elemento central de procesamiento, interactuando con los periféricos de entrada (joystick analógico por ADC y sensor de ultrasonido por Timers), periféricos de salida (servomotor y buzzer piezoeléctrico controlados por PWM, e indicadores LED de estado) y los módulos de soporte (memoria Flash interna para almacenamiento persistente y módulo Bluetooth HM-10 vía USART para la interfaz con la aplicación móvil).
+
 <img width="652" height="393" alt="image" src="https://github.com/user-attachments/assets/3f8501e2-13a5-407d-a2ba-0abaef1fd077" />
 
+<p align="center"><em>Figura 1. Diagrama en bloques funcional del sistema.</em></p>
 
 ## 3. Elicitación de Requisitos y Casos de Uso
 
 ### 3.1 Requisitos del Sistema
+
+En la Tabla 2 se presentan los requisitos del sistema categorizados por grupos funcionales, que abarcan desde el sensado y control espacial hasta las alertas, interfaz de navegación, almacenamiento y conectividad.
 
 | Grupo | ID | Descripción |
 | :--- | :--- | :--- |
@@ -120,7 +131,11 @@ En función de la ponderación realizada, se selecciona la opción **Base + Mód
 | | 5.2 | El firmware operará bajo los estados de alto nivel: NORMAL / FALLA. |
 | | 5.3 | En caso de desconexión del sensor o lectura fuera de rango crítico, el sistema entrará en estado FALLA. |
 
+<p align="center"><em>Tabla 2. Especificación de requisitos del sistema.</em></p>
+
 ### 3.2 Casos de Uso
+
+A continuación, se detallan los casos de uso principales que describen la secuencia de interacciones entre los componentes del sistema, el entorno y el usuario para la ejecución de las funciones clave en el microcontrolador.
 
 **Caso de Uso 1: Detección de Obstáculo en Modo Automático**
 
